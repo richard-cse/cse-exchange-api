@@ -4,7 +4,6 @@ const { getLogger } = require('../utils/logging')
 const jayson = require('jayson')
 const RPCManager = require('../rpc/manager')
 const connectMongoDB = require('../db/mongo')
-const Miner = require('../miner/main')
 
 const args = require('yargs')
   .options({
@@ -16,7 +15,7 @@ const args = require('yargs')
     rpcport: {
       describe: 'HTTP-RPC server listening port',
       number: true,
-      default: 8545
+      default: 1010
     },
     rpcaddr: {
       describe: 'HTTP-RPC server listening interface',
