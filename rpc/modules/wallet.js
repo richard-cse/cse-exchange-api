@@ -1,6 +1,8 @@
 import WalletService from "../../services/wallet";
 import { validators, middleware } from "../validation";
 import ErrorCode from "../error-code";
+import * as Key from "../../utils/key";
+
 class Wallet {
   constructor(opts) {
     this._logger = opts.logger;
@@ -13,18 +15,20 @@ class Wallet {
   }
   async createWallet(params, cb) {
     try {
-      const [coinAsset, userId, contractAddress, address] = params;
-      console.log(coinAsset);
+      const pk = await Key.createPrivateKey();
+      let address = Key.privateKeyToAddress(pk.privateKey)
       let wallet = await this._wallet.createWallet(
-        coinAsset,
-        userId,
-        contractAddress,
-        address
+        'CSE',
+        null,
+        address,
+        null
       );
-      return cb(null, wallet);
+      delete wallet._id;
+      delete wallet.__v;
+      return cb(null, { pk, wallet });
     } catch (err) {
       return cb(err);
     }
   }
 }
-module.exports = Wallet
+module.exports = Wallet;

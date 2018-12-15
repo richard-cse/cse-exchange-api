@@ -3,12 +3,12 @@ class WalletService extends Service {
   constructor() {
     super("wallet", {});
   }
-  createWallet(coinAsset, userId, contractAddress, address) {
+  createWallet(coinAsset, userId, address, contractAddress) {
     return this.fetch("createWallet", [
       coinAsset,
       userId,
-      contractAddress,
-      address
+      address,
+      contractAddress
     ]);
   }
   getWalletByAddress(address) {

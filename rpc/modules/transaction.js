@@ -17,9 +17,27 @@ class Transaction {
       const [txId] = params;
       console.log("params ", params);
       const transaction = await this._transaction.getTransactionByTxId(txId);
+      delete transaction._id;
+      delete transaction.__v;
       return cb(null, transaction);
     } catch (error) {
       return cb(error);
+    }
+  }
+  async transfer(params, cb) {
+    try {
+      const [obj] = params;
+      console.log("transfer", params);
+      const transfer = await this._transaction.transfer(
+        obj.fromAddress,
+        obj.toAddress,
+        obj.coinAsset,
+        obj.amount,
+        "EXCHANGE"
+      );
+      return cb(null, transfer);
+    } catch (err) {
+      return cb(err);
     }
   }
 }
