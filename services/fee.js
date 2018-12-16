@@ -6,8 +6,8 @@ class FeeService extends Service {
   getPriceByCSE () {
     return this.fetch('getPriceByCSE', [])
   }
-  getFeeByCoin () {
-    return this.fetch('getFeeByCoin', [])
+  getFeeByCoin (coinAsset) {
+    return this.fetch('getFeeByCoin', [coinAsset])
   }
 }
 export default FeeService

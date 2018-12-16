@@ -24,16 +24,17 @@ class Transaction {
       return cb(error);
     }
   }
-  async transfer(params, cb) {
+  async transferCSE(params, cb) {
     try {
       const [obj] = params;
       console.log("transfer", params);
-      const transfer = await this._transaction.transfer(
+      const transfer = await this._transaction.transferCSE(
         obj.fromAddress,
         obj.toAddress,
-        obj.coinAsset,
+        "CSE",
         obj.amount,
-        "EXCHANGE"
+        "EXCHANGE",
+        obj.exchangeID
       );
       return cb(null, transfer);
     } catch (err) {

@@ -6,12 +6,14 @@ class TransactionService extends Service {
   getTransactionByTxId(txId) {
     return this.fetch("getTransactionByTxId", [txId]);
   }
-  transfer(fromAddress, toAddress, coinAsset, amount) {
-    return this.fetch("transfer", [
+  transferCSE(fromAddress, toAddress, coinAsset, amount, types, exchangeID) {
+    return this.fetch("transferCSE", [
       fromAddress,
       toAddress,
       coinAsset,
-      amount
+      amount,
+      types,
+      exchangeID
     ]);
   }
 }
