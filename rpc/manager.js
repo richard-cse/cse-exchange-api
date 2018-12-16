@@ -39,7 +39,7 @@ class RPCManager {
       getMethodNames(modules[modName])
         .filter(methodName => methodName !== 'constructor')
         .forEach(methodName => {
-          const concatedMethodName = `${modName}_${methodName}`
+          const concatedMethodName = `cse_${methodName}`
 
           this._logger.info(
             `Setup module method '${concatedMethodName}' to RPC`

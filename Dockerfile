@@ -10,7 +10,8 @@ COPY . /app
 
 ENV MONGO_URL=""
 ENV NODE_ENV=""
+ENV PORT=""
 
-CMD npm run prod:start
+CMD node bin/cli.js --rpc --rpcport=${PORT}
 
-EXPOSE 8545
+EXPOSE ${PORT}}

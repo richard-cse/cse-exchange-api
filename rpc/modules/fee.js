@@ -6,24 +6,25 @@ class Fee {
     this._logger = opts.logger
     this._fee = new FeeService()
     this._error = new ErrorCode()
-    this.getFeeByCoin = middleware(this.getFeeByCoin.bind(this), 1, [
+    this.getFeeByCoin = middleware(this.getFee.bind(this), 1, [
       [validators.coinAsset]
     ])
   }
-  async getPriceByCSE (params, cb) {
+  async getPrice (params, cb) {
     try {
       let price = await this._fee.getPriceByCSE()
-      return cb(null, price)
+      if (!price) throw this._error.internalError('PRICE_NOT_FOUND')
+      return cb(null, { unit: 'USDT', price: Number(price.price) })
     } catch (err) {
       return cb(err)
     }
   }
-  async getFeeByCoin (params, cb) {
+  async getFee (params, cb) {
     try {
-      const [coinAsset] = params
-      console.log('params', coinAsset)
+      const coinAsset = 'CSE'
       let fee = await this._fee.getFeeByCoin(coinAsset)
-      return cb(null, fee)
+      if (!fee) throw this._error.internalError('FEE_NOT_FOUND')
+      return cb(null, { unit: 'CSE', fee: Number(fee.fee) })
     } catch (err) {
       return cb(err)
     }

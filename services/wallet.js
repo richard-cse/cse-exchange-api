@@ -1,19 +1,19 @@
-import Service from "./service";
+import Service from './service'
 class WalletService extends Service {
-  constructor() {
-    super("wallet", {});
+  constructor () {
+    super('wallet', {})
   }
-  createWallet(coinAsset, userId, address, contractAddress) {
-    return this.fetch("createWallet", [
+  createWallet (coinAsset, userId, address, contractAddress) {
+    return this.fetch('createWallet', [
       coinAsset,
       userId,
       address,
       contractAddress
-    ]);
+    ])
   }
-  getWalletByAddress(address) {
-    return this.fetch("getWalletByAddress", [address]);
+  getWalletByAddress (address) {
+    return this.fetch('getWalletByAddress', [address])
   }
 }
 
-export default WalletService;
+export default WalletService
