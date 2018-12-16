@@ -19,6 +19,7 @@ class Transaction {
       const transaction = await this._transaction.getTransactionByTxId(txId)
       delete transaction._id
       delete transaction.__v
+      delete transaction.types
       return cb(null, transaction)
     } catch (error) {
       return cb(error)
