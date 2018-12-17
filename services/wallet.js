@@ -14,6 +14,9 @@ class WalletService extends Service {
   getWalletByAddress (address) {
     return this.fetch('getWalletByAddress', [address])
   }
+  generateAddress () {
+    return this.fetch('generateAddress')
+  }
 }
 
 export default WalletService

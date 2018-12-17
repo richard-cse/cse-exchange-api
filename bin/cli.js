@@ -54,9 +54,13 @@ function runRpcServer (options) {
 
   app.use(function (req, res, next) {
     // decorate the request with header params or whatever other contextual values are desired
-    const token = req.headers['authorization']
-    if (token && req.body.params && typeof req.body.params === 'object') {
-      req.body.params.push({ token })
+    const authorization = req.headers['authorization']
+    if (
+      authorization &&
+      req.body.params &&
+      typeof req.body.params === 'object'
+    ) {
+      req.body.params.push({ authorization })
     }
     next()
   })
