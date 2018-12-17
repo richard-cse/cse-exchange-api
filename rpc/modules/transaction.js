@@ -2,7 +2,6 @@ import TransactionService from '../../services/transaction'
 import { validators, middleware } from '../validation'
 import ErrorCode from '../error-code'
 import ExchangeService from '../../services/exchange'
-import * as Key from '../../utils/key'
 class Transaction {
   constructor (opts) {
     this._logger = opts.logger
