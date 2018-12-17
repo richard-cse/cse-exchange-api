@@ -3,8 +3,8 @@ class ExchangeService extends Service {
   constructor () {
     super('exchange', {})
   }
-  checkExchange (apiKey, apiSecret) {
-    return this.fetch('checkExchange', [apiKey, apiSecret])
+  transfer (fromAddress, toAddress, amount, apiKey, apiSecret) {
+    return this.fetch('transfer', [fromAddress, toAddress, amount, apiKey, apiSecret])
   }
 }
 export default ExchangeService

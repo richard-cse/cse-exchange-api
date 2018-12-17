@@ -30,7 +30,7 @@ class Transaction {
   }
   /**
    * transfer
-   * @param {toAddress, amount, apiKey, apiSecret} params
+   * @param obj {toAddress, amount, apiKey, apiSecret} params
    * @param {*} cb
    */
   async transfer (params, cb) {
@@ -38,21 +38,15 @@ class Transaction {
       const [obj] = params
       console.log('transfer')
       let headerParams = params[params.length - 1]
-      let authorization = headerParams.authorization
-      let address = await Key.privateKeyToAddress(authorization)
-      let exchange = await this._exchange.checkExchange(
-        obj.apiKey,
-        obj.apiSecret
-      )
-      const transfer = await this._transaction.transferCSE(
-        address,
+      let transfer = await this._exchange.transfer(
+        headerParams.authorization,
         obj.toAddress,
-        'CSE',
         obj.amount,
-        'EXCHANGE',
-        exchange.exchangeID
+        headerParams.APIKey,
+        headerParams.APISecret
       )
-      return cb(null, transfer)
+      console.log(transfer)
+      cb(null, transfer)
     } catch (err) {
       return cb(err)
     }
