@@ -3,7 +3,6 @@ const { randomBytes } = require('crypto')
 const { getLogger } = require('../utils/logging')
 const jayson = require('jayson')
 const RPCManager = require('../rpc/manager')
-const connectMongoDB = require('../db/mongo')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -80,8 +79,6 @@ async function run () {
     rpcport: args.rpcport,
     rpcaddr: args.rpcaddr
   }
-  //
-  await connectMongoDB(logger)
   //
   runRpcServer(options)
 }
