@@ -1,37 +1,13 @@
 {
-  "name": "blockchain-service",
+  "name": "echange-api",
   "version": "1.0.0",
   "main": "bin/cli.js",
   "license": "MIT",
-  "dependencies": {
-    "bn.js": "^4.11.8",
-    "bson": "^4.0.0-rc5",
-    "chalk": "^2.4.1",
-    "coinbase": "^2.0.8",
-    "create-hash": "^1.2.0",
-    "ethjs-util": "^0.1.6",
-    "jayson": "^2.1.0",
-    "keccak": "^1.4.0",
-    "keythereum": "^1.0.4",
-    "moment": "^2.22.2",
-    "mongoose": "^5.3.4",
-    "mongoose-paginate": "^5.0.3",
-    "random": "^2.0.12",
-    "random-number": "^0.0.9",
-    "request": "^2.88.0",
-    "rlp": "^2.1.0",
-    "safe-buffer": "^5.1.2",
-    "secp256k1": "^3.5.2",
-    "sha256": "^0.2.0",
-    "validator": "^10.8.0",
-    "yargs": "^12.0.2"
-  },
   "scripts": {
     "start-cli": "nodemon bin/cli.js --rpc",
     "start-bot": "nodemon bin/cli.js --miner",
     "lint": "eslint --ext .js ./ --fix",
-    "precommit": "npm run lint",
-    "prod:start": "node bin/cli.js --rpc"
+    "precommit": "npm run lint"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
@@ -48,5 +24,28 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.1.2",
     "winston": "^3.1.0"
+  },
+  "dependencies": {
+    "async": "^2.6.1",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "ethjs-util": "^0.1.6",
+    "express": "^4.16.4",
+    "jayson": "^2.1.0",
+    "jsonwebtoken": "^8.2.1",
+    "keccak": "^1.4.0",
+    "keythereum": "^1.0.4",
+    "level": "^4.0.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.4",
+    "multer": "^1.4.1",
+    "nodemailer": "^4.6.7",
+    "rlp": "^2.1.0",
+    "safe-buffer": "^5.1.2",
+    "secp256k1": "^3.5.2",
+    "sha256": "^0.2.0",
+    "validator": "^10.8.0",
+    "yargs": "^12.0.2"
   }
 }

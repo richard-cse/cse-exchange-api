@@ -4,7 +4,9 @@ const { getLogger } = require('../utils/logging')
 const jayson = require('jayson')
 const RPCManager = require('../rpc/manager')
 const connectMongoDB = require('../db/mongo')
-
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const args = require('yargs')
   .options({
     rpc: {
@@ -46,8 +48,23 @@ function runRpcServer (options) {
   const { rpcport, rpcaddr } = options
   const manager = new RPCManager(options)
   const server = jayson.server(manager.getMethods())
+  const app = express()
+  // pass headers to methods
+  app.use(bodyParser.json())
+  app.use(cors())
+
+  app.use(function (req, res, next) {
+    // decorate the request with header params or whatever other contextual values are desired
+    const token = req.headers['authorization']
+    if (token && req.body.params && typeof req.body.params === 'object') {
+      req.body.params.push({ token })
+    }
+    next()
+  })
+  app.use(server.middleware())
+
+  app.listen(rpcport)
   logger.info(`RPC HTTP endpoint opened: http://${rpcaddr}:${rpcport}`)
-  server.http().listen(rpcport)
 }
 
 async function run () {
@@ -55,8 +72,7 @@ async function run () {
     logger: logger,
     localPort: args.port,
     rpcport: args.rpcport,
-    rpcaddr: args.rpcaddr,
-    privateKey: args.key
+    rpcaddr: args.rpcaddr
   }
   //
   await connectMongoDB(logger)
