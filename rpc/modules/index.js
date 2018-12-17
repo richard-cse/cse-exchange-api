@@ -1,4 +1,4 @@
-const moduleList = ['transaction', 'wallet', 'fee']
+const moduleList = ['transaction', 'wallet', 'price']
 
 moduleList.forEach(mod => {
   module.exports[mod] = require(`./${mod}`)

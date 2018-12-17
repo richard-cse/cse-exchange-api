@@ -17,7 +17,6 @@ class Transaction {
   async getTransactionByTxId (params, cb) {
     try {
       const [txId] = params
-      console.log('params ', params)
       const transaction = await this._transaction.getTransactionByTxId(txId)
       delete transaction._id
       delete transaction.__v
@@ -35,7 +34,6 @@ class Transaction {
   async transfer (params, cb) {
     try {
       const [obj] = params
-      console.log('transfer')
       let headerParams = params[params.length - 1]
       let transfer = await this._exchange.transfer(
         headerParams.authorization,
@@ -44,7 +42,6 @@ class Transaction {
         headerParams.APIKey,
         headerParams.APISecret
       )
-      console.log(transfer)
       cb(null, transfer)
     } catch (err) {
       return cb(err)
