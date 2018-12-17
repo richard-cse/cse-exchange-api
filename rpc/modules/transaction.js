@@ -1,13 +1,14 @@
 import TransactionService from '../../services/transaction'
 import { validators, middleware } from '../validation'
 import ErrorCode from '../error-code'
-import TransactionLogic from '../../logics/transaction'
+import ExchangeService from '../../services/exchange'
+import * as Key from '../../utils/key'
 class Transaction {
   constructor (opts) {
     this._logger = opts.logger
     this._transaction = new TransactionService()
+    this._exchange = new ExchangeService()
     this._error = new ErrorCode()
-    this._logic = new TransactionLogic(opts)
     this.getTransactionByTxId = middleware(
       this.getTransactionByTxId.bind(this),
       1,
@@ -27,21 +28,29 @@ class Transaction {
       return cb(error)
     }
   }
-
+  /**
+   * transfer
+   * @param {toAddress, amount, apiKey, apiSecret} params
+   * @param {*} cb
+   */
   async transfer (params, cb) {
     try {
       const [obj] = params
-      let tokenParams = params[params.length - 1]
-      console.log(tokenParams)
-      let token = tokenParams.token
-      let address = await this._logic.getAddressByToken(token)
+      console.log('transfer')
+      let headerParams = params[params.length - 1]
+      let authorization = headerParams.authorization
+      let address = await Key.privateKeyToAddress(authorization)
+      let exchange = await this._exchange.checkExchange(
+        obj.apiKey,
+        obj.apiSecret
+      )
       const transfer = await this._transaction.transferCSE(
         address,
         obj.toAddress,
         'CSE',
         obj.amount,
         'EXCHANGE',
-        obj.exchangeID
+        exchange.exchangeID
       )
       return cb(null, transfer)
     } catch (err) {
@@ -51,6 +60,7 @@ class Transaction {
 
   async getTransactionByAddress (params, cb) {
     try {
+      console.log('get transaction by address')
       const [address, type, { page, limit }] = params
       const transfer = await this._transaction.getTransactionByAddress(
         address,

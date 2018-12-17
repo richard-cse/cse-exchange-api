@@ -1,36 +1,18 @@
 import WalletService from '../../services/wallet'
-// import { validators, middleware } from '../validation'
 import ErrorCode from '../error-code'
-import * as Key from '../../utils/key'
 
 class Wallet {
   constructor (opts) {
     this._logger = opts.logger
     this._wallet = new WalletService()
     this._error = new ErrorCode()
-    // this.createWallet = middleware(this.createWallet.bind(this), 2, [
-    //   [validators.coinAsset],
-    //   [validators.empty]
-    // ])
   }
   async createWallet (params, cb) {
     try {
       console.log('start ctreate wallet')
-      const pk = await Key.createPrivateKey()
-      let address = Key.privateKeyToAddress(pk.privateKey)
-      await this._wallet.createWallet(
-        'CSE',
-        null,
-        address,
-        null
-      )
-
-      const privObj = Key.privateKeyToJson(pk)
-      const rs = {
-        privateKey: privObj.privateKey,
-        address
-      }
-      return cb(null, rs)
+      let generate = await this._wallet.generateAddress()
+      await this._wallet.createWallet('CSE', null, generate.address, null)
+      return cb(null, generate)
     } catch (err) {
       return cb(err)
     }
