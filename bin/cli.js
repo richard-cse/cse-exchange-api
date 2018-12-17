@@ -58,11 +58,17 @@ function runRpcServer (options) {
     const APIKey = req.headers['apikey']
     const APISecret = req.headers['apisecret']
     if (
-      authorization &&
+      APIKey &&
+      APISecret &&
       req.body.params &&
       typeof req.body.params === 'object'
     ) {
-      req.body.params.push({ authorization, APIKey, APISecret })
+      const options = {
+        APIKey,
+        APISecret
+      }
+      if (authorization) options.authorization = authorization
+      req.body.params.push(options)
     }
     next()
   })

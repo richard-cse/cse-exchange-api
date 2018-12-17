@@ -13,8 +13,9 @@ class Wallet {
   }
   async createWallet (params, cb) {
     try {
-      console.log('start ctreate wallet')
       let headerParams = params[params.length - 1]
+      console.log('start ctreate wallet', headerParams, params)
+
       let create = await this._wallet.createExchangeWallet(
         headerParams.APIKey,
         headerParams.APISecret

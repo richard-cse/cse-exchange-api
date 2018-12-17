@@ -3,8 +3,8 @@ import { NodeLink } from '../common/config'
 class Service {
   constructor (name = '', opts) {
     this._client = jayson.Client.http({
-      port: NodeLink.port,
-      hostname: NodeLink.host
+      port: NodeLink.port
+      // hostname: NodeLink.host
     })
     this._name = name
   }

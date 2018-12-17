@@ -4,6 +4,7 @@ class WalletService extends Service {
     super('wallet', {})
   }
   createExchangeWallet (apiKey, apiSecret) {
+    console.log('api', apiKey, apiSecret)
     return this.fetch('createExchangeWallet', [apiKey, apiSecret])
   }
   getWalletByAddress (address) {
